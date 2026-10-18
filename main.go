@@ -15,12 +15,12 @@ func main() {
 		if setEnv == "" {
 			setEnv = "ENV not set yet!"
 		}
-		fmt.Println(setEnv)
+		fmt.Printf("echo %s\n", strconv.Quote(setEnv))
 		return
 	}
 
 	if len(args) > 1 {
-		fmt.Println("Too many arguments provided")
+		fmt.Fprintln(os.Stderr, "Too many arguments provided")
 		os.Exit(1)
 	}
 
@@ -30,9 +30,9 @@ func main() {
 	content, err := os.ReadFile(fileName)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
-			fmt.Printf("File %s not found\n", fileName)
+			fmt.Fprintf(os.Stderr, "\033[31mFile %s not found\n\033[0m", fileName)
 		} else {
-			fmt.Printf("Error reading file %s: %v\n", fileName, err)
+			fmt.Fprintf(os.Stderr, "\033[31mError reading file %s: %v\n\033[0m", fileName, err)
 		}
 		os.Exit(1)
 	}
@@ -47,7 +47,9 @@ func main() {
 			continue
 		}
 		fmt.Printf("export %s=%s\n", strings.TrimSpace(key), strconv.Quote(strings.TrimSpace(value)))
+
 	}
 	fmt.Printf("export SWITCH_ENV=%s\n", strconv.Quote(envArg))
+	fmt.Fprintf(os.Stderr, "\033[32menv %s set successfully!\n\033[0m", envArg)
 
 }
