@@ -2,7 +2,7 @@
 
 Load `.env.<name>` into the **current** shell.
 
-Works on **zsh** (and bash). The binary prints `unset`/`export` lines; a shell function `eval`s them **only if the binary succeeds**. Fish is not supported.
+Works on **zsh** (and bash). The binary prints `unset`/`export` lines; a shell function `eval`s them **only if the binary succeeds**.
 
 ## Setup
 
